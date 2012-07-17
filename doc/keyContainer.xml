@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+   <KeyContainer Version="1.0"
+       xmlns="urn:ietf:params:xml:ns:keyprov:pskc">
+       <KeyPackage>
+           <DeviceInfo>
+               <Manufacturer>TokenVendorAcme</Manufacturer>
+               <SerialNo>654321</SerialNo>
+           </DeviceInfo>
+           <Key Id="1"
+           Algorithm="urn:ietf:params:xml:ns:keyprov:pskc:hotp">
+               <Issuer>Issuer</Issuer>
+               
+               <Data>
+                   <Secret>
+                       <PlainValue>
+                           MTIzNDU2Nzg5MDEyMzQ1Njc4OTA=
+                       </PlainValue>
+                   </Secret>
+                 
+               </Data>
+               
+           </Key>
+       </KeyPackage>
+       <KeyPackage>
+           <DeviceInfo>
+               <Manufacturer>TokenVendorAcme</Manufacturer>
+               <SerialNo>123456</SerialNo>
+           </DeviceInfo>
+           <Key Id="2"
+           Algorithm="urn:ietf:params:xml:ns:keyprov:pskc:hotp">
+               <Issuer>Issuer</Issuer>
+               <Data>
+                   <Secret>
+                       <PlainValue>
+                           MTIzNDU2Nzg5MDEyMzQ1Njc4OTA=
+                       </PlainValue>
+                   </Secret>
+               </Data>
+           </Key>
+       </KeyPackage>
+       <KeyPackage>
+           <DeviceInfo>
+               <Manufacturer>TokenVendorAcme</Manufacturer>
+               <SerialNo>9999999</SerialNo>
+           </DeviceInfo>
+           <Key Id="3"
+           Algorithm="urn:ietf:params:xml:ns:keyprov:pskc:hotp">
+               <Issuer>Issuer</Issuer>
+               <Data>
+                   <Secret>
+                       <PlainValue>
+                           MTIzNDU2Nzg5MDEyMzQ1Njc4OTA=
+                       </PlainValue>
+                   </Secret>
+               </Data>
+           </Key>
+       </KeyPackage>
+       <KeyPackage>
+           <DeviceInfo>
+               <Manufacturer>TokenVendorAcme</Manufacturer>
+               <SerialNo>9999999</SerialNo>
+           </DeviceInfo>
+           <Key Id="4"
+           Algorithm="urn:ietf:params:xml:ns:keyprov:pskc:hotp">
+               <Issuer>Issuer</Issuer>
+               <Data>
+                   <Secret>
+                       <PlainValue>
+                           MTIzNDU2Nzg5MDEyMzQ1Njc4OTA=
+                       </PlainValue>
+                   </Secret>
+               </Data>
+           </Key>
+       </KeyPackage>
+   </KeyContainer>
