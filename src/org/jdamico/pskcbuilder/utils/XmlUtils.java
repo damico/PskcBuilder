@@ -3,8 +3,6 @@ package org.jdamico.pskcbuilder.utils;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
@@ -26,6 +24,7 @@ public class XmlUtils {
 	
 	public boolean isDocValid(String xml) {
 
+		boolean ret = true;
 		SchemaFactory factory = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
 		File schemaLocation = new File(Constants.XSD_PATH);
 
@@ -34,35 +33,23 @@ public class XmlUtils {
 			try {
 				schema = factory.newSchema(schemaLocation);
 			} catch (SAXException e) {
+				ret = false;
 				e.printStackTrace();
-				//throw new TamandareException("Invalid xsd or xsd not found: "+e.getStackTrace(),this.getClass().getName());
 			}
 			Validator validator = schema.newValidator();
-
-
-
 			Source source = new StreamSource(new StringReader(xml));
-			String err = null;
 			try {
 				validator.validate(source);
 			} catch (SAXException e) {
-				try {
-					err = URLEncoder.encode(e.getMessage(), "UTF-8");
-				} catch (UnsupportedEncodingException e1) {
-					e1.printStackTrace();
-				}
-				//LoggerManager.getInstance().logAtExceptionTime(this.getClass().getName(), err+" > "+xml);
-				//throw new TamandareException(e.getStackTrace(),err);
+				ret = false;
+				e.printStackTrace();
 			} catch (IOException e) {
-				try {
-					err = URLEncoder.encode(e.getMessage(), "UTF-8");
-				} catch (UnsupportedEncodingException e1) {
-					e1.printStackTrace();
-				}
-				//throw new TamandareException(e.getStackTrace(),err);
+				ret = false;
+				e.printStackTrace();
 			}
 		}else{
-			//throw new TamandareException("xsd not found!",this.getClass().getName());
+			ret = false;
+			System.err.println("xsd not found!");
 		}
 
 
@@ -70,12 +57,10 @@ public class XmlUtils {
 
 
 
-		return true;
+		return ret;
 
 	}
 	public String Obj2XmlStr(KeyContainer kc) {
-		
-		//sb.append("\n");
 		
 		StringBuffer sb = new StringBuffer();
 		
@@ -89,11 +74,20 @@ public class XmlUtils {
 			sb.append("<Manufacturer>"+kc.getKeyPackageList().get(i).getDeviceInfo().getManufacturer()+"</Manufacturer>\n");
 			sb.append("<SerialNo>"+kc.getKeyPackageList().get(i).getDeviceInfo().getSerialNo()+"</SerialNo>\n");
 			sb.append("</DeviceInfo>\n");
-			sb.append("Key Id=\""+i+"\" Algorithm=\""+kc.getKeyPackageList().get(i).getKey().getAlgorithm()+"\">\n");
+			sb.append("<Key Id=\""+(i+1)+"\" Algorithm=\""+kc.getKeyPackageList().get(i).getKey().getAlgorithm()+"\">\n");
 			sb.append("<Issuer>"+kc.getKeyPackageList().get(i).getKey().getIssuer()+"</Issuer>\n");
-			sb.append("<Data>\n" +
-					"<TimeInterval>"+kc.getKeyPackageList().get(i).getKey().getData().getTimeInterval()+"<TimeInterval>\n" +
-					"<Secret><PlainValue>"+kc.getKeyPackageList().get(i).getKey().getData().getSecret().getPlainValue()+"</PlainValue></Secret></Data></Key>");
+			sb.append("<AlgorithmParameters>\n");
+			sb.append("<ResponseFormat Length=\""+kc.getKeyPackageList().get(i).getKey().getAlgorithmParameters().getResponseFormat().getLength()+"\" Encoding=\""+kc.getKeyPackageList().get(i).getKey().getAlgorithmParameters().getResponseFormat().getEncoding()+"\"/>\n");
+			sb.append("</AlgorithmParameters>\n");
+			sb.append("<Data>\n");
+			sb.append("<Secret><PlainValue>"+kc.getKeyPackageList().get(i).getKey().getData().getSecret().getPlainValue()+"</PlainValue></Secret>\n");
+					//"<Counter><PlainValue>0</PlainValue></Counter>\n"+
+			sb.append("<TimeInterval><PlainValue>"+kc.getKeyPackageList().get(i).getKey().getData().getTimeInterval()+"</PlainValue></TimeInterval>\n");
+					//"<TimeDrift><PlainValue>"+kc.getKeyPackageList().get(i).getKey().getData().getTimeInterval()+"</PlainValue></TimeDrift>\n" +
+					
+					//"<##other></##other>\n"+
+			sb.append("</Data>\n");
+			sb.append("</Key>\n");
 			sb.append("</KeyPackage>\n");
 		}
 		

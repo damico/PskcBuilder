@@ -1,9 +1,13 @@
 package org.jdamico.pskcbuilder.dataobjects;
 
+
 public class KeyPackage {
 	
 	private DeviceInfo deviceInfo = null;
 	private Key key = null;
+	 
+	
+	
 	public DeviceInfo getDeviceInfo() {
 		return deviceInfo;
 	}
@@ -21,6 +25,9 @@ public class KeyPackage {
 		this.deviceInfo = deviceInfo;
 		this.key = key;
 	}
+	
+	
+	
 
 	
 	
