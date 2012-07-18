@@ -5,11 +5,16 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
+/**
+ * 
+ * @author Jose Damico
+ * Eclipse Public License - v 1.0 (http://www.eclipse.org/legal/epl-v10.html)
+ *
+ */
 public class Commons {
 	private static Commons INSTANCE = null;
 	public static Commons getInstance(){
@@ -17,6 +22,27 @@ public class Commons {
 		return INSTANCE;
 	}
 	private Commons(){}
+	
+	
+	public String byteArrayToHexString(byte[] raw) throws UnsupportedEncodingException 
+	{
+		final byte[] HEX_CHAR_TABLE = {
+			(byte)'0', (byte)'1', (byte)'2', (byte)'3',
+			(byte)'4', (byte)'5', (byte)'6', (byte)'7',
+			(byte)'8', (byte)'9', (byte)'a', (byte)'b',
+			(byte)'c', (byte)'d', (byte)'e', (byte)'f'
+		};
+		
+		byte[] hex = new byte[2 * raw.length];
+		int index = 0;
+
+		for (byte b : raw) {
+			int v = b & 0xFF;
+			hex[index++] = HEX_CHAR_TABLE[v >>> 4];
+			hex[index++] = HEX_CHAR_TABLE[v & 0xF];
+		}
+		return new String(hex, "ASCII");
+	}
 	
 	public byte[] hexStringToByteArray(String s) {
 		int len = s.length();

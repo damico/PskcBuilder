@@ -1,12 +1,15 @@
 package org.jdamico.pskcbuilder.dataobjects;
 
-
+/**
+ * 
+ * @author Jose Damico
+ * Eclipse Public License - v 1.0 (http://www.eclipse.org/legal/epl-v10.html)
+ *
+ */
 public class KeyPackage {
 	
 	private DeviceInfo deviceInfo = null;
 	private Key key = null;
-	 
-	
 	
 	public DeviceInfo getDeviceInfo() {
 		return deviceInfo;

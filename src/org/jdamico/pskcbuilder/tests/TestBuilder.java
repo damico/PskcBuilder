@@ -19,6 +19,12 @@ import org.junit.Test;
 
 import com.sun.org.apache.xml.internal.security.utils.Base64;
 
+/**
+ * 
+ * @author Jose Damico
+ * Eclipse Public License - v 1.0 (http://www.eclipse.org/legal/epl-v10.html)
+ *
+ */
 public class TestBuilder {
 
 	private String input = null;
@@ -26,8 +32,8 @@ public class TestBuilder {
 	@Before
 	public void setUp() throws Exception {
 		
-		input =  	"NFDM00000001; 94D690C0efefcbcbff33C7E810CD22A367B3D32B\n" +
-					"NFDM00000002; efefcb94D690C0cbff33C7E810CD22A367B3D32B";
+		input =  	"NFDM00000001;94D690C0efefcbcbff33C7E810CD22A367B3D32B\n" +
+					"NFDM00000002;efefcb94D690C0cbff33C7E810CD22A367B3D32B";
 		
 	}
 	
@@ -50,7 +56,7 @@ public class TestBuilder {
 			DeviceInfo di = new DeviceInfo("xyzw", st.nextToken());
 			byte[] byteSeed = Commons.getInstance().hexStringToByteArray(st.nextToken());
 
-			Data d = new Data(new Secret(Base64.encode(byteSeed)), "60");
+			Data d = new Data(new Secret(Base64.encode(byteSeed)), "60", "0");
 			Key k= new Key("1", "urn:ietf:params:xml:ns:keyprov:pskc:hotp", "xyzw", d, ap);
 			keyPackageList.add(new KeyPackage(di, k));
 

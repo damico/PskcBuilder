@@ -13,6 +13,12 @@ import javax.xml.validation.Validator;
 import org.jdamico.pskcbuilder.dataobjects.KeyContainer;
 import org.xml.sax.SAXException;
 
+/**
+ * 
+ * @author Jose Damico
+ * Eclipse Public License - v 1.0 (http://www.eclipse.org/legal/epl-v10.html)
+ *
+ */
 public class XmlUtils {
 	
 	private static XmlUtils INSTANCE = null;
@@ -52,11 +58,6 @@ public class XmlUtils {
 			System.err.println("xsd not found!");
 		}
 
-
-
-
-
-
 		return ret;
 
 	}
@@ -81,11 +82,9 @@ public class XmlUtils {
 			sb.append("</AlgorithmParameters>\n");
 			sb.append("<Data>\n");
 			sb.append("<Secret><PlainValue>"+kc.getKeyPackageList().get(i).getKey().getData().getSecret().getPlainValue()+"</PlainValue></Secret>\n");
-					//"<Counter><PlainValue>0</PlainValue></Counter>\n"+
+			sb.append("<Counter><PlainValue>"+kc.getKeyPackageList().get(i).getKey().getData().getCounter()+"</PlainValue></Counter>\n");
 			sb.append("<TimeInterval><PlainValue>"+kc.getKeyPackageList().get(i).getKey().getData().getTimeInterval()+"</PlainValue></TimeInterval>\n");
 					//"<TimeDrift><PlainValue>"+kc.getKeyPackageList().get(i).getKey().getData().getTimeInterval()+"</PlainValue></TimeDrift>\n" +
-					
-					//"<##other></##other>\n"+
 			sb.append("</Data>\n");
 			sb.append("</Key>\n");
 			sb.append("</KeyPackage>\n");
