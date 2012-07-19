@@ -55,7 +55,6 @@ public class XmlUtils {
 			}
 		}else{
 			ret = false;
-			System.err.println("xsd not found!");
 		}
 
 		return ret;

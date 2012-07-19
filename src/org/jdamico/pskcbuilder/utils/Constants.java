@@ -8,6 +8,9 @@ package org.jdamico.pskcbuilder.utils;
  */
 public interface Constants {
 
-	public static final String XSD_PATH = "/home/jdamico/workspaceC/PskcBuilder/doc/pskc.xsd";
+	public static final String XSD_PATH = "./doc/pskc.xsd";
+	public static final String APP_NAME = "PskcBuilder";
+	public static final String APP_VERSION = "0.0.1";
+	public static final String DEFAULT_OUTPUT_FILENAME = "/output.pskcxml";
 
 }

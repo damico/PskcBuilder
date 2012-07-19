@@ -22,17 +22,17 @@ public class Commons {
 		return INSTANCE;
 	}
 	private Commons(){}
-	
-	
+
+
 	public String byteArrayToHexString(byte[] raw) throws UnsupportedEncodingException 
 	{
 		final byte[] HEX_CHAR_TABLE = {
-			(byte)'0', (byte)'1', (byte)'2', (byte)'3',
-			(byte)'4', (byte)'5', (byte)'6', (byte)'7',
-			(byte)'8', (byte)'9', (byte)'a', (byte)'b',
-			(byte)'c', (byte)'d', (byte)'e', (byte)'f'
+				(byte)'0', (byte)'1', (byte)'2', (byte)'3',
+				(byte)'4', (byte)'5', (byte)'6', (byte)'7',
+				(byte)'8', (byte)'9', (byte)'a', (byte)'b',
+				(byte)'c', (byte)'d', (byte)'e', (byte)'f'
 		};
-		
+
 		byte[] hex = new byte[2 * raw.length];
 		int index = 0;
 
@@ -43,35 +43,43 @@ public class Commons {
 		}
 		return new String(hex, "ASCII");
 	}
-	
-	public byte[] hexStringToByteArray(String s) {
+
+	public byte[] hexStringToByteArray(String s) throws Exception {
 		int len = s.length();
 		byte[] data = new byte[len / 2];
 		for (int i = 0; i < len; i += 2) data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4) + Character.digit(s.charAt(i+1), 16));
 		return data;
 	}
-	
-	public void stringToFile(String content, String strFilePath){
-		try {
-			BufferedWriter out = new BufferedWriter(new FileWriter(strFilePath));
-			out.write(content);
-			out.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
+	public void stringToFile(String content, String strFilePath) throws IOException {
+
+		BufferedWriter out = new BufferedWriter(new FileWriter(strFilePath));
+		out.write(content);
+		out.close();
+
 	}
-	
-	public List<String> getListStringFromFile(String filePath) {
-		
-		List<String> ret = new ArrayList<String>();
-		try {
-			BufferedReader in = new BufferedReader(new FileReader(filePath));
-			String str;
-			while ((str = in.readLine()) != null) ret.add(str);
-			in.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+
+	public String getStringFromFile(String filePath) throws IOException {
+		StringBuffer ret = new StringBuffer();
+
+		BufferedReader in = new BufferedReader(new FileReader(filePath));
+		String str;
+		while ((str = in.readLine()) != null) {
+			ret.append(str+"\n");
 		}
+		in.close();
+
+		return ret.toString();
+	}
+	public List<String> getListStringFromFile(String filePath) throws IOException {
+
+		List<String> ret = new ArrayList<String>();
+
+		BufferedReader in = new BufferedReader(new FileReader(filePath));
+		String str;
+		while ((str = in.readLine()) != null) ret.add(str);
+		in.close();
+
 		return ret;
 	}
 }

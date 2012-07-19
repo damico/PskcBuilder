@@ -38,7 +38,7 @@ public class TestBuilder {
 	}
 	
 	@Test
-	public void test() {
+	public void test() throws Exception {
 
 		
 
