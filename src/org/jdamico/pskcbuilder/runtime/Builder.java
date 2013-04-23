@@ -18,6 +18,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -73,12 +74,14 @@ public class Builder implements ActionListener, PropertyChangeListener {
 
 	JLabel intervalLabel = null;
 	JTextField interval = null;
+	
+	JComboBox<String> algoType = null;
 
 	public void addComponentToPane(Container pane) {
 
 		dc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
-		separatorLabel = new JLabel("Column sepator ");
+		separatorLabel = new JLabel("Column");
 
 		respLenLabel = new JLabel("Resp. Length ");
 		respLenLabel.setBounds(4, 186, 100, 26);
@@ -104,6 +107,11 @@ public class Builder implements ActionListener, PropertyChangeListener {
 		intervalLabel.setBounds(4+178, 186, 88, 26);
 		interval.setBounds(4+88+140, 186, 20, 26);
 
+		algoType = new JComboBox<String>();
+		algoType.addItem("hotp");
+		algoType.addItem("totp");
+		algoType.setBounds(160,152,60,26);
+		
 		separator = new JTextField();
 		separator.setText(";");
 
@@ -131,8 +139,8 @@ public class Builder implements ActionListener, PropertyChangeListener {
 		console.setEnabled(true);
 		console.setAutoscrolls(true);
 
-		separatorLabel.setBounds(160, 152, 120, 26);
-		separator.setBounds(262, 152, 18, 26);
+		separatorLabel.setBounds(220, 152, 120, 26);
+		separator.setBounds(267, 152, 12, 26);
 
 
 		executeButton.setBounds(255, 184, 70, 26);
@@ -153,6 +161,9 @@ public class Builder implements ActionListener, PropertyChangeListener {
 		pane.setLayout(null);
 		pane.add(inputButton);
 		pane.add(outputButton);
+		
+		pane.add(algoType);
+		
 		pane.add(separatorLabel);
 		pane.add(separator);
 
@@ -331,7 +342,7 @@ public class Builder implements ActionListener, PropertyChangeListener {
 
 					try {
 
-						int tokensImported = Controller.getInstance().buildPskc(input, output, manufacturer.getText(),separator.getText(), respLen.getText(), counter.getText(), interval.getText());
+						int tokensImported = Controller.getInstance().buildPskc(input, output, manufacturer.getText(),separator.getText(), respLen.getText(), counter.getText(), interval.getText(), algoType.getSelectedIndex());
 
 						console.append("Tokens imported: "+tokensImported+"\n");
 						console.append("==============================\n");
@@ -392,6 +403,7 @@ public class Builder implements ActionListener, PropertyChangeListener {
 		outputButton.setEnabled(enable);
 		executeButton.setEnabled(enable);
 		// fields
+		algoType.setEnabled(enable);
 		separator.setEnabled(enable);
 		counter.setEnabled(enable);
 		interval.setEnabled(enable);

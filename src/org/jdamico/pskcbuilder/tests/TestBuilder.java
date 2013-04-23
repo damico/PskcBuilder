@@ -13,6 +13,7 @@ import org.jdamico.pskcbuilder.dataobjects.KeyPackage;
 import org.jdamico.pskcbuilder.dataobjects.ResponseFormat;
 import org.jdamico.pskcbuilder.dataobjects.Secret;
 import org.jdamico.pskcbuilder.utils.Commons;
+import org.jdamico.pskcbuilder.utils.Constants;
 import org.jdamico.pskcbuilder.utils.XmlUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,7 +48,7 @@ public class TestBuilder {
 
 		KeyContainer kc = new KeyContainer();
 		List<KeyPackage> keyPackageList = new ArrayList<KeyPackage>();
-		AlgorithmParameters ap = new AlgorithmParameters(new ResponseFormat("6", "DECIMAL"));
+		AlgorithmParameters ap = new AlgorithmParameters(new ResponseFormat("6", "DECIMAL"), Constants.ALGO_TYPE_TOTP);
 
 		for (String string : lst) {
 
@@ -57,7 +58,10 @@ public class TestBuilder {
 			byte[] byteSeed = Commons.getInstance().hexStringToByteArray(st.nextToken());
 
 			Data d = new Data(new Secret(Base64.encode(byteSeed)), "60", "0");
-			Key k= new Key("1", "urn:ietf:params:xml:ns:keyprov:pskc:hotp", "xyzw", d, ap);
+			
+			String sAlgoType = ap.getAlgoType() == Constants.ALGO_TYPE_HOTP ? "hotp" : "totp";
+			
+			Key k= new Key("1", "urn:ietf:params:xml:ns:keyprov:pskc:" + sAlgoType, "xyzw", d, ap);
 			keyPackageList.add(new KeyPackage(di, k));
 
 		}
@@ -65,7 +69,7 @@ public class TestBuilder {
 		kc.setKeyPackageList(keyPackageList);
 
 		String xmlStr = XmlUtils.getInstance().Obj2XmlStr(kc);
-		if(XmlUtils.getInstance().isDocValid(xmlStr)) Commons.getInstance().stringToFile(xmlStr, "/tmp/testInput.xml");
+		if(XmlUtils.getInstance().isDocValid(xmlStr)) Commons.getInstance().stringToFile(xmlStr, "/tmp/testOutput.xml");
 
 	}
 
