@@ -10,7 +10,9 @@ public interface Constants {
 
 	public static final String XSD_PATH = "./doc/pskc.xsd";
 	public static final String APP_NAME = "PskcBuilder";
-	public static final String APP_VERSION = "0.0.1";
+	public static final String APP_VERSION = "0.0.2";
 	public static final String DEFAULT_OUTPUT_FILENAME = "/output.pskcxml";
+	public static final int ALGO_TYPE_HOTP = 0;
+	public static final int ALGO_TYPE_TOTP = 1;
 
 }

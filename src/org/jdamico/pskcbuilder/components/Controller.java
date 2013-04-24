@@ -33,13 +33,15 @@ public class Controller {
 	}
 	private Controller(){}
 	
-	public int buildPskc(String inputFilePath, String outputFilePath, String manufact, String colSep, String respLen, String counter, String interval) throws Exception{
+	public int buildPskc(String inputFilePath, String outputFilePath, String manufact, String colSep, String respLen, String counter, String interval, int algoType) throws Exception{
 		
 		List<String> lst = Commons.getInstance().getListStringFromFile(inputFilePath);
 
 		KeyContainer kc = new KeyContainer();
 		List<KeyPackage> keyPackageList = new ArrayList<KeyPackage>();
-		AlgorithmParameters ap = new AlgorithmParameters(new ResponseFormat(respLen, "DECIMAL"));
+		AlgorithmParameters ap = new AlgorithmParameters(new ResponseFormat(respLen, "DECIMAL"), algoType);
+		
+		String sAlgoType = ap.getAlgoType() == Constants.ALGO_TYPE_HOTP ? "hotp" : "totp";
 
 		for (String string : lst) {
 
@@ -49,7 +51,7 @@ public class Controller {
 			byte[] byteSeed = Commons.getInstance().hexStringToByteArray(st.nextToken());
 
 			Data d = new Data(new Secret(Base64.encode(byteSeed)), interval, counter);
-			Key k= new Key("1", "urn:ietf:params:xml:ns:keyprov:pskc:hotp", manufact, d, ap);
+			Key k= new Key("1", "urn:ietf:params:xml:ns:keyprov:pskc:"+sAlgoType, manufact, d, ap);
 			keyPackageList.add(new KeyPackage(di, k));
 
 		}

@@ -81,7 +81,10 @@ public class XmlUtils {
 			sb.append("</AlgorithmParameters>\n");
 			sb.append("<Data>\n");
 			sb.append("<Secret><PlainValue>"+kc.getKeyPackageList().get(i).getKey().getData().getSecret().getPlainValue()+"</PlainValue></Secret>\n");
-			sb.append("<Counter><PlainValue>"+kc.getKeyPackageList().get(i).getKey().getData().getCounter()+"</PlainValue></Counter>\n");
+			
+			String sAlgoType = kc.getKeyPackageList().get(i).getKey().getAlgorithmParameters().getAlgoType() == Constants.ALGO_TYPE_HOTP ? "Counter" : "Time";
+			
+			sb.append("<"+sAlgoType+"><PlainValue>"+kc.getKeyPackageList().get(i).getKey().getData().getCounter()+"</PlainValue></"+sAlgoType+">\n");
 			sb.append("<TimeInterval><PlainValue>"+kc.getKeyPackageList().get(i).getKey().getData().getTimeInterval()+"</PlainValue></TimeInterval>\n");
 					//"<TimeDrift><PlainValue>"+kc.getKeyPackageList().get(i).getKey().getData().getTimeInterval()+"</PlainValue></TimeDrift>\n" +
 			sb.append("</Data>\n");
